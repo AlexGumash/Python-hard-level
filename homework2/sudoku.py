@@ -48,7 +48,9 @@ def get_row(values, pos):
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    pass
+    row, col = pos
+    return values[row]
+
 
 
 def get_col(values, pos):
@@ -61,7 +63,12 @@ def get_col(values, pos):
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    pass
+
+    row, col = pos
+    column = []
+    for i in range(len(values)):
+        column.append(values[i][col])
+    return column
 
 
 def get_block(values, pos):
@@ -75,7 +82,64 @@ def get_block(values, pos):
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    pass
+    block = []
+    row, col = pos
+    if (row < 3 and col < 3):
+        for i in range(3):
+            for j in range(3):
+                block.append(values[i][j])
+        return block
+
+    if (row < 3 and col < 6):
+        for i in range(3):
+            for j in range(3, 6):
+                block.append(values[i][j])
+        return block
+
+    if (row < 3 and col < 9):
+        for i in range(3):
+            for j in range(6, 9):
+                block.append(values[i][j])
+        return block
+
+    if (row < 6 and col < 3):
+        for i in range(3, 6):
+            for j in range(3):
+                block.append(values[i][j])
+        return block
+
+    if (row < 6 and col < 6):
+        for i in range(3, 6):
+            for j in range(3, 6):
+                block.append(values[i][j])
+        return block
+
+    if (row < 6 and col < 9):
+        for i in range(3, 6):
+            for j in range(6, 9):
+                block.append(values[i][j])
+        return block
+
+    if (row < 9 and col < 3):
+        for i in range(6, 9):
+            for j in range(3):
+                block.append(values[i][j])
+        return block
+
+    if (row < 9 and col < 6):
+        for i in range(6, 9):
+            for j in range(3, 6):
+                block.append(values[i][j])
+        return block
+
+    if (row < 9 and col < 9):
+        for i in range(6, 9):
+            for j in range(6, 9):
+                block.append(values[i][j])
+        return block
+
+
+
 
 
 def find_empty_positions(grid):
