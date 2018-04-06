@@ -1,5 +1,6 @@
 import random
-
+import time
+import multiprocessing
 
 def read_sudoku(filename):
     """ Прочитать Судоку из указанного файла """
@@ -149,15 +150,6 @@ def solve(grid):
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
 
-    # if (find_empty_positions(grid) != False):
-    #     row, col = find_empty_positions(grid)
-    #     possible_values = find_possible_values(grid, (row, col))
-    #     if (len(possible_values) != 0):
-    #         for possible_value in possible_values:
-    #             grid[row][col] = possible_value
-    #             solve(grid)
-    # return grid
-
     def solve_recursive(grid):
         if (find_empty_positions(grid) == False):
             return True
@@ -242,7 +234,6 @@ def generate_sudoku(N):
     >>> check_solution(solution)
     True
     """
-    # PUT YOUR CODE HERE
 
     grid = []
     for i in range(3 * 3):
@@ -324,12 +315,14 @@ def generate_sudoku(N):
     return grid
 
 
+def run_solve(fname):
+    grid = read_sudoku(fname)
+    start = time.time()
+    solve(grid)
+    end = time.time()
+    print(f'{fname}: {end-start}')
+
 if __name__ == '__main__':
-    for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
-        grid = read_sudoku(fname)
-        grid = solve(grid)
-        display(grid)
-        print(check_solution(grid))
-        # display(grid)
-        # solution = solve(grid)
-        # display(solution)
+    for fname in ('puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt'):
+        p = multiprocessing.Process(target=run_solve, args=(fname,))
+        p.start()
